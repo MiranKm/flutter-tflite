@@ -9,6 +9,7 @@ import 'package:ffi/ffi.dart';
 import 'package:tflite_flutter/src/bindings/bindings.dart';
 
 export 'src/delegate.dart';
+export 'src/delegates/flex_delegate.dart';
 export 'src/delegates/gpu_delegate.dart';
 export 'src/delegates/metal_delegate.dart';
 export 'src/delegates/xnnpack_delegate.dart';
