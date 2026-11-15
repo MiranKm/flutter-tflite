@@ -55,6 +55,15 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
+    // Newer Flutter versions compile this plugin's Kotlin sources. Keep the
+    // Kotlin JVM target in sync with compileOptions above, otherwise the build
+    // fails with "Inconsistent JVM-target compatibility" on newer JDKs.
+    project.plugins.withId('org.jetbrains.kotlin.android') {
+        project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            compilerOptions.jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+        }
+    }
+
     defaultConfig {
         // LiteRT 1.4.0 native libraries are built against API 21.
         minSdkVersion 21

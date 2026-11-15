@@ -31,19 +31,19 @@ typedef _InitNative = Void Function(Pointer<Void> env, Pointer<Void> clazz);
 typedef _InitDart = void Function(Pointer<Void> env, Pointer<Void> clazz);
 typedef _CreateNative = Int64 Function(Pointer<Void> env, Pointer<Void> clazz);
 typedef _CreateDart = int Function(Pointer<Void> env, Pointer<Void> clazz);
-typedef _DeleteNative =
-    Void Function(Pointer<Void> env, Pointer<Void> clazz, Int64 delegate);
-typedef _DeleteDart =
-    void Function(Pointer<Void> env, Pointer<Void> clazz, int delegate);
+typedef _DeleteNative = Void Function(
+    Pointer<Void> env, Pointer<Void> clazz, Int64 delegate);
+typedef _DeleteDart = void Function(
+    Pointer<Void> env, Pointer<Void> clazz, int delegate);
 
 class _FlexBindings {
   _FlexBindings._(DynamicLibrary lib)
-    : create = lib.lookupFunction<_CreateNative, _CreateDart>(
-        '${_jniPrefix}nativeCreateDelegate',
-      ),
-      delete = lib.lookupFunction<_DeleteNative, _DeleteDart>(
-        '${_jniPrefix}nativeDeleteDelegate',
-      ) {
+      : create = lib.lookupFunction<_CreateNative, _CreateDart>(
+          '${_jniPrefix}nativeCreateDelegate',
+        ),
+        delete = lib.lookupFunction<_DeleteNative, _DeleteDart>(
+          '${_jniPrefix}nativeDeleteDelegate',
+        ) {
     lib.lookupFunction<_InitNative, _InitDart>(
       '${_jniPrefix}nativeInitTensorFlow',
     )(nullptr, nullptr);

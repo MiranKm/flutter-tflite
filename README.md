@@ -62,7 +62,7 @@ Android can be run with the commands
 
 while devices are plugged in.
 
-Note: This requires a device with a minimum API level of 26.
+Note: This requires Android API level 21 or higher and iOS 12.0 or higher.
 
 Note: TFLite may not work in the iOS simulator. It's recommended that you test with a physical device.
 
@@ -142,7 +142,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 ### Import the libraries
 
-In the dependency section of `pubspec.yaml` file, add `tflite_flutter: ^0.10.1` (adjust the version accordingly based on the latest release)
+In the dependency section of `pubspec.yaml` file, add `tflite_flutter: ^0.13.0` (adjust the version accordingly based on the latest release)
 
 ### Creating the Interpreter
 
@@ -199,6 +199,34 @@ Refer to the documentation for info on creating interpreter from buffer or file.
     // print outputs
     print(outputs)
     ```
+
+### Select TensorFlow ops (Flex delegate, Android only)
+
+Models converted with [select TensorFlow ops](https://ai.google.dev/edge/litert/models/ops_select) need the Flex delegate. Its native library is large (tens of MB per ABI), so it is not bundled with this plugin. Add it to your app's `android/app/build.gradle`:
+
+```gradle
+dependencies {
+    implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:2.16.1'
+}
+```
+
+Then add the delegate to the interpreter options:
+
+```dart
+final flexDelegate = FlexDelegate();
+final options = InterpreterOptions()..addDelegate(flexDelegate);
+final interpreter = await Interpreter.fromAsset('assets/your_model.tflite', options: options);
+
+// When done:
+interpreter.close();
+flexDelegate.delete();
+```
+
+Notes:
+
+- `FlexDelegate()` throws an `UnsupportedError` on other platforms, or if the dependency above is missing.
+- The `2.16.1` select-tf-ops binaries are 4KB page aligned, so an app that includes them does not meet the Android 16KB page size requirement.
+- This delegate is experimental.
 
 ### Closing the interpreter
 

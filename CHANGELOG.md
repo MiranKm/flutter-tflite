@@ -1,3 +1,12 @@
+## 0.13.0 (November 15, 2026)
+* Added `FlexDelegate` for Android to run select TensorFlow ops. The native library is not bundled: add `org.tensorflow:tensorflow-lite-select-tf-ops` to your app to use it (see README). Experimental.
+* iOS: updated TensorFlowLiteSwift from 2.12.0 to 2.17.0
+* **Breaking**: minimum iOS version is now 12.0 (required by TensorFlowLiteSwift 2.17.0)
+* **Breaking**: Android plugin `minSdkVersion` raised from 19 to 21 (required by LiteRT 1.4.0)
+* Android: fixed "Inconsistent JVM-target compatibility" build failure with newer Flutter/JDK versions
+* bertqa example: removed redundant Gradle `buildscript` block
+* Example iOS projects updated to a 12.0 deployment target
+
 ## 0.12.1 (October 28, 2025)
 * **CRITICAL FIX**: Properly implement Android 16KB page size support
 * Migrated from TensorFlow Lite 2.12.0 to Google AI Edge LiteRT 1.4.0
