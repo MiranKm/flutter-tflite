@@ -56,8 +56,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 19
-
+        // LiteRT 1.4.0 native libraries are built against API 21.
+        minSdkVersion 21
     }
 }
 
