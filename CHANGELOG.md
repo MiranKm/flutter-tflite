@@ -4,8 +4,10 @@
 * **Breaking**: minimum iOS version is now 12.0 (required by TensorFlowLiteSwift 2.17.0)
 * **Breaking**: Android plugin `minSdkVersion` raised from 19 to 21 (required by LiteRT 1.4.0)
 * Android: fixed "Inconsistent JVM-target compatibility" build failure with newer Flutter/JDK versions
-* bertqa example: removed redundant Gradle `buildscript` block
-* Example iOS projects updated to a 12.0 deployment target
+* Examples (Android): removed stale `buildscript`/`kotlin_version` blocks, updated to Android Gradle Plugin 8.9.1, Gradle 8.11.1 and Kotlin 2.1.0
+* Examples (iOS): deployment target raised to 15.0 (minimum accepted by Xcode 27), applied to pods as well
+* README: documented a known CoreML delegate crash in TensorFlow Lite (still present in 2.17.0)
+* iOS: after upgrading, run `pod update TensorFlowLiteSwift TensorFlowLiteC`
 
 ## 0.12.1 (October 28, 2025)
 * **CRITICAL FIX**: Properly implement Android 16KB page size support

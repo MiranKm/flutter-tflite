@@ -16,7 +16,7 @@ import UIKit
 import Flutter
 import AVFoundation
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
     override func application(
         _ application: UIApplication,

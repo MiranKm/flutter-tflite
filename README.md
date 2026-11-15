@@ -64,6 +64,8 @@ while devices are plugged in.
 
 Note: This requires Android API level 21 or higher and iOS 12.0 or higher.
 
+When upgrading from an earlier version on iOS, run `pod update TensorFlowLiteSwift TensorFlowLiteC` in your `ios` folder, because `Podfile.lock` pins the previous TensorFlow Lite version.
+
 Note: TFLite may not work in the iOS simulator. It's recommended that you test with a physical device.
 
 When creating a release archive (IPA), the symbols are stripped by Xcode, so the command `flutter build ipa` may throw a `Failed to lookup symbol ... symbol not found` error. To work around this:
@@ -227,6 +229,12 @@ Notes:
 - `FlexDelegate()` throws an `UnsupportedError` on other platforms, or if the dependency above is missing.
 - The `2.16.1` select-tf-ops binaries are 4KB page aligned, so an app that includes them does not meet the Android 16KB page size requirement.
 - This delegate is experimental.
+
+### Known issue: CoreML delegate crash on iOS
+
+`CoreMlDelegate` can crash with `EXC_BAD_ACCESS` during `invoke()` on graphs that the delegate splits into many partitions (seen with a float16 YOLO detection model: 441 of 1043 nodes delegated across 163 partitions). The fault is inside TensorFlow Lite's CoreML delegate, not in this plugin, and is still present in TensorFlowLiteSwift 2.17.0. It is intermittent in normal runs and deterministic under Guard Malloc. Crash reporters attribute it to `TfLiteCoreMlDelegateDelete`, which is only the nearest exported symbol.
+
+If you hit it, run the model without the delegate (CPU). Before shipping a model with `CoreMlDelegate`, run a few inferences on a simulator with `DYLD_INSERT_LIBRARIES=/usr/lib/libgmalloc.dylib`.
 
 ### Closing the interpreter
 
